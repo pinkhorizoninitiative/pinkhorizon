@@ -1,151 +1,372 @@
-/* main.js - Pink Horizon Initiative */
+const cursorBlob = document.querySelector(".cursor");
+const cursorDot = document.querySelector(".cursor-dot");
 
-/* Cursor trailing effect */
-const cursor = document.querySelector('.cursor');
-if (cursor) {
-  document.addEventListener('mousemove', e => {
-    const { clientX, clientY } = e;
-    cursor.style.transform = `translate3d(${clientX}px, ${clientY}px, 0) scale(1)`;
-  });
 
-  document.addEventListener('mouseenter', e => {
-    if (e.target.closest('a, button')) {
-      cursor.classList.add('active');
-    }
-  });
+if(cursorBlob && cursorDot){
 
-  document.addEventListener('mouseleave', e => {
-    if (e.target.closest('a, button')) {
-      cursor.classList.remove('active');
-    }
-  });
+let mouseX = 0;
+let mouseY = 0;
+
+let blobX = 0;
+let blobY = 0;
+
+let dotX = 0;
+let dotY = 0;
+
+
+window.addEventListener("mousemove", e=>{
+
+mouseX = e.clientX;
+mouseY = e.clientY;
+
+});
+
+
+function render(){
+
+dotX += (mouseX-dotX)*0.35;
+dotY += (mouseY-dotY)*0.35;
+
+
+blobX += (mouseX-blobX)*0.12;
+blobY += (mouseY-blobY)*0.12;
+
+
+cursorDot.style.left = dotX + "px";
+cursorDot.style.top = dotY + "px";
+
+cursorBlob.style.left = blobX + "px";
+cursorBlob.style.top = blobY + "px";
+
+
+requestAnimationFrame(render);
+
 }
 
-/* Magnetic button effect */
-document.querySelectorAll('.focus-magnetic').forEach(el => {
-  el.addEventListener('mousemove', e => {
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const offsetX = (x - centerX) * 0.015;
-    const offsetY = (y - centerY) * 0.015;
-    el.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-  });
-  el.addEventListener('mouseleave', () => {
-    el.style.transform = 'translate(0,0)';
-  });
+
+render();
+
+
+
+document.querySelectorAll(
+"a,button,.card,img,.focus-magnetic"
+)
+.forEach(el=>{
+
+
+el.addEventListener("mouseenter",()=>{
+
+cursorBlob.classList.add("cursor-hover");
+
 });
 
-/* IntersectionObserver for scroll reveals */
-const revealElements = document.querySelectorAll('.reveal, .reveal-from-top, .reveal-from-left, .reveal-from-right, .reveal-scale');
 
-const observer = new IntersectionObserver((entries) => {
+el.addEventListener("mouseleave",()=>{
+
+cursorBlob.classList.remove("cursor-hover");
+
+});
+
+
+});
+
+
+}
+
+/* ============================
+   Magnetic Buttons
+============================ */
+
+document.querySelectorAll('.focus-magnetic').forEach(button => {
+
+  button.addEventListener('mousemove', e => {
+
+    const rect = button.getBoundingClientRect();
+
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+
+    button.style.transform =
+      `translate(${x * 0.08}px, ${y * 0.08}px)`;
+
+  });
+
+
+  button.addEventListener('mouseleave', () => {
+
+    button.style.transform =
+      "translate(0,0)";
+
+  });
+
+});
+
+
+/* ============================
+   Scroll Reveal Animations
+============================ */
+
+
+const revealElements = document.querySelectorAll(
+  '.reveal, .reveal-from-top, .reveal-from-left, .reveal-from-right, .reveal-scale'
+);
+
+
+const revealObserver = new IntersectionObserver(
+(entries) => {
+
   entries.forEach(entry => {
+
     if (entry.isIntersecting) {
-      entry.target.style.animationPlayState = 'running';
-      observer.unobserve(entry.target);
+
+      entry.target.classList.add('visible');
+
+      revealObserver.unobserve(entry.target);
+
     }
+
   });
-}, { threshold: 0.15 });
 
-revealElements.forEach(el => {
-  el.style.animationPlayState = 'paused';
-  observer.observe(el);
+},
+{
+  threshold: 0.15
 });
 
-/* Horizon line animations */
-const horizonLines = document.querySelectorAll('.horizon__line');
-horizonLines.forEach(line => {
-  line.style.animationPlayState = 'paused';
+
+revealElements.forEach(element => {
+
+  revealObserver.observe(element);
+
 });
 
-const horizonObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      line.style.animationPlayState = 'running';
-      horizonObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.5 });
 
-horizonLines.forEach(line => {
-  horizonObserver.observe(line);
+
+/* ============================
+   Horizon Line Animation
+============================ */
+
+
+const horizonLines =
+document.querySelectorAll('.horizon__line');
+
+
+const horizonObserver =
+new IntersectionObserver(
+(entries)=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add('animate');
+
+horizonObserver.unobserve(entry.target);
+
+}
+
 });
 
-/* Nav scroll effect */
+},
+{
+threshold:0.5
+});
+
+
+horizonLines.forEach(line=>{
+
+horizonObserver.observe(line);
+
+});
+
+
+
+/* ============================
+   Navbar Scroll Effect
+============================ */
+
+
 const nav = document.querySelector('.nav');
-if (nav) {
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
-  });
+
+
+if(nav){
+
+window.addEventListener('scroll',()=>{
+
+if(window.scrollY > 100){
+
+nav.classList.add('scrolled');
+
 }
 
-/* Mobile menu toggle */
-const navToggle = document.getElementById('nav-toggle');
-const mobileMenu = document.getElementById('mobile-menu');
+else{
 
-if (navToggle && mobileMenu) {
-  navToggle.addEventListener('click', () => {
-    const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-    navToggle.setAttribute('aria-expanded', !expanded);
-    mobileMenu.setAttribute('aria-hidden', expanded);
-    mobileMenu.classList.toggle('active');
-  });
+nav.classList.remove('scrolled');
+
 }
 
-/* Smooth scroll for anchor links */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
-  });
 });
 
-/* Staggered reveals for impact items */
-const impactItems = document.querySelectorAll('.impact__rail li, .focus__item');
-impactItems.forEach((item, index) => {
-  item.style.animationDelay = `${index * 0.1}s`;
-  item.classList.add('reveal-from-right');
+}
+
+
+
+/* ============================
+   Mobile Menu
+============================ */
+
+
+const navToggle =
+document.getElementById('nav-toggle');
+
+const mobileMenu =
+document.getElementById('mobile-menu');
+
+
+if(navToggle && mobileMenu){
+
+navToggle.addEventListener('click',()=>{
+
+const expanded =
+navToggle.getAttribute('aria-expanded')
+=== 'true';
+
+
+navToggle.setAttribute(
+'aria-expanded',
+!expanded
+);
+
+
+mobileMenu.setAttribute(
+'aria-hidden',
+expanded
+);
+
+
+mobileMenu.classList.toggle('active');
+
+
 });
 
-/* Event cards staggered reveal */
-const events = document.querySelectorAll('.event');
-events.forEach((event, index) => {
-  event.style.animationDelay = `${index * 0.15}s`;
-  event.classList.add('reveal-from-left');
+}
+
+
+
+/* ============================
+   Smooth Anchor Scrolling
+============================ */
+
+
+document.querySelectorAll(
+'a[href^="#"]'
+)
+.forEach(anchor=>{
+
+
+anchor.addEventListener(
+'click',
+function(e){
+
+const target =
+document.querySelector(
+this.getAttribute('href')
+);
+
+
+if(target){
+
+e.preventDefault();
+
+
+target.scrollIntoView({
+
+behavior:'smooth',
+
+block:'start'
+
 });
 
-/* Hero content staggered */
-const heroElements = document.querySelector('.hero__content') ?
-  document.querySelectorAll('.hero__content > *') : [];
-heroElements.forEach((el, index) => {
-  el.style.animationDelay = `${index * 0.2}s`;
-  el.classList.add('reveal-from-left');
+}
+
 });
 
-/* Cursor hide on scroll */
-let lastScrollY = window.scrollY;
-const cursorHide = () => {
-  if (window.scrollY > 100 && Math.abs(window.scrollY - lastScrollY) < 5) {
-    cursor.classList.add('hidden');
-  } else {
-    cursor.classList.remove('hidden');
-  }
-  lastScrollY = window.scrollY;
-};
 
-window.addEventListener('scroll', cursorHide);
+});
 
-/* Auto-hide cursor on touch devices */
-if ('ontouchstart' in window) {
-  cursor.classList.add('hidden');
+
+
+/* ============================
+   Staggered Animations
+============================ */
+
+
+document.querySelectorAll(
+'.impact__rail li, .focus__item'
+)
+.forEach((item,index)=>{
+
+item.style.animationDelay =
+`${index * 0.12}s`;
+
+item.classList.add(
+'reveal-from-right'
+);
+
+});
+
+
+
+document.querySelectorAll('.event')
+.forEach((event,index)=>{
+
+event.style.animationDelay =
+`${index * 0.15}s`;
+
+event.classList.add(
+'reveal-from-left'
+);
+
+});
+
+
+
+const hero =
+document.querySelector('.hero__content');
+
+
+if(hero){
+
+hero.querySelectorAll(':scope > *')
+.forEach((element,index)=>{
+
+
+element.style.animationDelay =
+`${index * 0.2}s`;
+
+
+element.classList.add(
+'reveal-from-left'
+);
+
+
+});
+
+}
+
+
+
+/* ============================
+   Disable Cursor On Touch
+============================ */
+
+
+if('ontouchstart' in window){
+
+if(cursorBlob)
+cursorBlob.style.display="none";
+
+if(cursorDot)
+cursorDot.style.display="none";
+
 }

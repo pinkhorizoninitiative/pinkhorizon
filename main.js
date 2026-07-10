@@ -403,7 +403,7 @@
      ---------------------------------------------------------- */
   if (!isTouch && !prefersReduced) {
     const tiltCards = document.querySelectorAll('.founder, .event, .sdg__card');
-    const MAX_TILT = 9; // degrees
+    const MAX_TILT = 6; // degrees
     tiltCards.forEach((card) => {
       card.classList.add('tilt');
       card.addEventListener('mouseenter', () => card.classList.add('is-tilting'));
@@ -414,7 +414,7 @@
         const rotY = px * MAX_TILT * 2;
         const rotX = -py * MAX_TILT * 2;
         card.style.transform =
-          `perspective(900px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateZ(24px)`;
+          `rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateZ(40px)`;
       });
       card.addEventListener('mouseleave', () => {
         card.classList.remove('is-tilting');
@@ -451,8 +451,14 @@
     renderCursor();
 
     document.querySelectorAll('a, button, .event, .focus__item, .metric, .founder').forEach((el) => {
-      el.addEventListener('mouseenter', () => cursorBlob.classList.add('cursor-hover'));
-      el.addEventListener('mouseleave', () => cursorBlob.classList.remove('cursor-hover'));
+      el.addEventListener('mouseenter', () => {
+        cursorBlob.classList.add('cursor-hover');
+        if (el.matches('.founder, .sdg__card, .event')) cursorBlob.classList.add('cursor-glass');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorBlob.classList.remove('cursor-hover');
+        cursorBlob.classList.remove('cursor-glass');
+      });
     });
 
     // Jelly squish: center dot swells elastically while held, springs back on release

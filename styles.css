@@ -296,6 +296,16 @@ main,
   background: radial-gradient(circle, rgba(255,255,255,.9), rgba(232,66,154,.5), transparent 70%);
 }
 
+/* Glass-morphism cursor over cards — frosted translucent orb */
+.cursor-glass {
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle, rgba(255,255,255,.6), rgba(244,240,235,.2), transparent 65%);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border: 1px solid rgba(245,195,64,.35);
+  opacity: 0.85;
+}
+
 @keyframes blobMorph {
   0% { border-radius: 45% 55% 50% 50%; }
   25% { border-radius: 60% 40% 55% 45%; }
@@ -446,32 +456,45 @@ a, button, input, textarea, select { cursor: none; }
    space, echoing the logo's sunrise arc */
 .hero__plane {
   position: absolute;
-  inset: 0;
-  margin: auto;
-  width: min(78vw, 820px);
-  height: min(78vw, 820px);
-  border: 1px solid rgba(245, 195, 64, 0.10);
+  top: 50%;
+  right: -6%;
+  width: min(64vw, 680px);
+  height: min(64vw, 680px);
+  margin-top: min(-32vw, -340px);
+  border: 1.5px solid rgba(245, 195, 64, 0.45);
   border-radius: 50%;
-  border-top-color: rgba(245, 195, 64, 0.22);
-  transform: rotateX(62deg) rotateZ(0deg);
+  border-top-color: rgba(245, 195, 64, 0.85);
+  box-shadow:
+    0 0 60px rgba(245, 195, 64, 0.12),
+    inset 0 0 80px rgba(245, 195, 64, 0.08);
+  transform: rotateX(52deg) rotateZ(0deg);
   transform-style: preserve-3d;
-  opacity: 0.55;
+  opacity: 0.9;
   pointer-events: none;
   z-index: 1;
-  animation: heroPlaneSpin 44s linear infinite;
+  animation: heroPlaneSpin 40s linear infinite;
+}
+
+.hero__plane::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, rgba(245, 195, 64, 0.10), transparent 62%);
 }
 
 .hero__plane::after {
   content: '';
   position: absolute;
-  inset: 18%;
-  border: 1px solid rgba(232, 66, 154, 0.10);
+  inset: 20%;
+  border: 1px solid rgba(232, 66, 154, 0.35);
+  border-top-color: rgba(232, 66, 154, 0.6);
   border-radius: 50%;
 }
 
 @keyframes heroPlaneSpin {
-  from { transform: rotateX(62deg) rotateZ(0deg); }
-  to { transform: rotateX(62deg) rotateZ(360deg); }
+  from { transform: rotateX(52deg) rotateZ(0deg); }
+  to { transform: rotateX(52deg) rotateZ(360deg); }
 }
 
 .hero__glow {

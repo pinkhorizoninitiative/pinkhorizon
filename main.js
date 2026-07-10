@@ -27,7 +27,10 @@
   // Specular sheen on section headings only — the hero title keeps its
   // dawn accent word, so it is deliberately excluded.
   document.querySelectorAll('[data-split]').forEach((el) => {
-    if (!el.classList.contains('hero__title')) el.classList.add('t-sheen');
+    if (!el.classList.contains('hero__title')) {
+      el.classList.add('t-sheen');
+      el.classList.add('t-skew');
+    }
   });
 
   /* ----------------------------------------------------------
@@ -199,6 +202,12 @@
       const p = Math.min(scrollY / vh, 1);
       heroProgress.style.transform = `scaleX(${p})`;
       heroProgress.style.width = '100%';
+    }
+
+    // Top scroll progress bar (fills across entire scroll journey)
+    const progressBar = document.getElementById('scrollProgressBar');
+    if (progressBar) {
+      progressBar.style.width = Math.min(docProgress * 100, 100) + '%';
     }
 
     // Dramatic scroll-linked lighting: the beam sweeps down the page and
@@ -453,11 +462,15 @@
     document.querySelectorAll('a, button, .event, .focus__item, .metric, .founder').forEach((el) => {
       el.addEventListener('mouseenter', () => {
         cursorBlob.classList.add('cursor-hover');
-        if (el.matches('.founder, .sdg__card, .event')) cursorBlob.classList.add('cursor-glass');
+        if (el.matches('.founder, .sdg__card, .event')) {
+          cursorBlob.classList.add('cursor-glass');
+          el.classList.add('active');
+        }
       });
       el.addEventListener('mouseleave', () => {
         cursorBlob.classList.remove('cursor-hover');
         cursorBlob.classList.remove('cursor-glass');
+        if (el.matches('.founder, .sdg__card, .event')) el.classList.remove('active');
       });
     });
 
@@ -473,6 +486,18 @@
     window.addEventListener('mousedown', press);
     window.addEventListener('mouseup', release);
     window.addEventListener('blur', release);
+
+    // Glow ripple when clicking on interactive glass elements
+    window.addEventListener('click', (e) => {
+      if (e.target.closest('[data-glass], a, button, .founder, .sdg__card, .event')) {
+        const ripple = document.createElement('div');
+        ripple.className = 'cursor-ripple';
+        ripple.style.left = e.clientX + 'px';
+        ripple.style.top = e.clientY + 'px';
+        document.body.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 500);
+      }
+    });
   } else if (cursorBlob && cursorDot) {
     cursorBlob.style.display = 'none';
     cursorDot.style.display = 'none';
@@ -535,4 +560,50 @@
       }
     });
   });
+
+  /* ----------------------------------------------------------
+     BACK-TO-TOP BUTTON
+     ---------------------------------------------------------- */
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    const toggleBack = () => {
+      if ((window.scrollY || window.pageYOffset) > 300) backToTop.classList.add('visible');
+      else backToTop.classList.remove('visible');
+    };
+    window.addEventListener('scroll', toggleBack, { passive: true });
+    toggleBack();
+    backToTop.addEventListener('click', () => {
+      if (smooth.enabled) smoothTo(0);
+      else window.scrollTo(0, 0);
+    });
+  }
+
+  /* ----------------------------------------------------------
+     EMAIL CAPTURE
+     ---------------------------------------------------------- */
+  const emailInput = document.getElementById('emailInput');
+  const emailBtn = document.getElementById('emailBtn');
+  const emailCapture = emailInput ? emailInput.closest('.email-capture') : null;
+  if (emailInput && emailBtn && emailCapture) {
+    emailBtn.addEventListener('click', () => {
+      emailCapture.classList.add('submitted');
+    });
+  }
+
+  /* ----------------------------------------------------------
+     FEATURE DETECTION FOR CROSS-BROWSER FALLBACKS
+     ---------------------------------------------------------- */
+  const root = document.documentElement;
+  const testEl = document.createElement('div');
+  const supportsBackdrop = CSS.supports('backdrop-filter', 'blur(1px)');
+  const supportsBlend = CSS.supports('mix-blend-mode', 'difference');
+  const supports3d = (function () {
+    const dummy = document.createElement('div');
+    dummy.style.transformStyle = 'preserve-3d';
+    return dummy.style.transformStyle === 'preserve-3d';
+  })();
+
+  if (!supportsBackdrop) root.classList.add('no-backdrop');
+  if (!supportsBlend) root.classList.add('no-blend');
+  if (!supports3d) root.classList.add('no-3d');
 })();

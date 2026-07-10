@@ -70,6 +70,33 @@ body {
   overflow: hidden;
   will-change: transform;
   perspective: 1200px;
+  background: linear-gradient(135deg, #0c0b0a 0%, #0c0b0a 20%, #0c0b0a, #0c0b0a) fixed;
+  animation: ambientShift 20s linear infinite;
+}
+
+@keyframes ambientShift {
+  0%, 100% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
+
+/* Animated gradient background overlay */
+.ambient::after {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 30% 40%, rgba(245, 195, 64, 0.08), transparent 70%),
+              radial-gradient(circle at 70% 80%, rgba(232, 66, 154, 0.06), transparent 70%),
+              linear-gradient(45deg, rgba(244, 240, 235, 0.03), rgba(244, 240, 235, 0.00));
+  animation: ambientGradient 24s ease-in-out infinite alternate;
+  mix-blend-mode: screen;
+}
+
+@keyframes ambientGradient {
+  0%, 100% { transform: translateX(-2%) translateY(-2%) scale(1); }
+  33% { transform: translateX(2%) translateY(4%) scale(1.02); }
+  66% { transform: translateX(-1%) translateY(3%) scale(0.98); }
 }
 
 .ambient__grid {
@@ -1296,6 +1323,134 @@ a, button, input, textarea, select { cursor: none; }
   transition: transform 0.12s ease-out, border-color 0.5s ease;
 }
 
+/* Skew-in reveal for section headings */
+.t-skew {
+  transform-origin: center;
+  transition: transform 0.6s var(--ease-out);
+}
+.t-skew.visible {
+  transform: skewX(-3deg) scale(1.02);
+}
+
+/* Floating hot-spot icons */
+.hotspot {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--dawn) 0%, transparent 70%);
+  opacity: 0.4;
+  animation: floatHotspot 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes floatHotspot {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.1); }
+}
+
+/* Color-accent pop-up on key words */
+[data-accent] {
+  position: relative;
+  color: var(--chalk);
+}
+[data-accent]::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 4px;
+  background: rgba(245, 195, 64, 0.08);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+[data-accent]:hover::after,
+[data-accent].active::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Scroll progress bar at top of viewport */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(to right, var(--rose), var(--dawn));
+  transform-origin: left;
+  z-index: 10000;
+}
+
+/* Back-to-top button */
+.back-to-top {
+  position: fixed;
+  bottom: 48px;
+  right: 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--warm-dark);
+  border: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
+  z-index: 9998;
+}
+.back-to-top.visible {
+  opacity: 0.9;
+  visibility: visible;
+}
+.back-to-top:hover {
+  background: var(--dawn);
+  border-color: var(--dawn);
+}
+.back-to-top span {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--chalk);
+  display: block;
+  line-height: 1;
+  margin-top: 26px;
+  text-align: center;
+}
+.back-to-top .arrow {
+  display: block;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* Floating badge on interactive elements */
+[data-glass] {
+  position: relative;
+}
+[data-glass]::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  background: var(--dawn);
+  border-radius: 50%;
+  opacity: 0;
+  animation: badgePulse 2s ease-in-out infinite;
+  animation-play-state: paused;
+}
+[data-glass].active::before {
+  animation-play-state: running;
+}
+@keyframes badgePulse {
+  0%, 100% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1); opacity: 0.8; }
+}
+
 .founder {
   background: var(--warm-dark);
   border: 1px solid var(--rule);
@@ -1797,4 +1952,95 @@ button:focus-visible {
   }
 
   html, body, a, button { cursor: auto; }
+}
+
+/* Cross-browser feature detection fallbacks */
+.no-backdrop .nav,
+.no-backdrop .mobile-menu {
+  background: var(--ink);
+}
+.no-backdrop .nav.scrolled {
+  background: rgba(12, 11, 10, 0.92);
+}
+.no-blend .cursor,
+.no-blend .cursor-dot {
+  mix-blend-mode: normal;
+  background: radial-gradient(circle, rgba(255,255,255,0.9), var(--rose), transparent 70%);
+}
+.no-blend .hero__title em {
+  mix-blend-mode: normal;
+}
+.no-3d .tilt,
+.no-3d .hero__plane,
+.no-3d .ambient__ring {
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Micro-interactive email capture */
+.email-capture {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(244, 240, 235, 0.02);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  max-width: 420px;
+}
+.email-capture input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  color: var(--chalk);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem;
+  padding: 8px 4px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.email-capture input::placeholder { color: var(--mist); }
+.email-capture input:focus { border-color: var(--dawn); }
+.email-capture button {
+  padding: 10px 20px;
+  border: 1px solid var(--rose);
+  background: transparent;
+  color: var(--chalk);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.email-capture button:hover {
+  background: var(--rose);
+  color: var(--white);
+}
+.email-capture .success {
+  display: none;
+  color: var(--dawn);
+  font-size: 0.85rem;
+}
+.email-capture.submitted .success { display: inline; }
+.email-capture.submitted input,
+.email-capture.submitted button { display: none; }
+
+/* Cursor glow ripple */
+.cursor-ripple {
+  position: fixed;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,195,64,0.25) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  animation: rippleExpand 0.5s ease-out forwards;
+}
+@keyframes rippleExpand {
+  to { width: 200px; height: 200px; opacity: 0; }
 }

@@ -24,11 +24,13 @@
 
   document.querySelectorAll('[data-split]').forEach(splitLines);
 
-  // Specular sheen on section headings only — the hero title keeps its
+  // Subtle skew reveal on section headings only — the hero title keeps its
   // dawn accent word, so it is deliberately excluded.
+  // NOTE: the specular sheen (background-clip:text + transparent fill) was
+  // removed — some browsers/GPUs report support but fail to paint it,
+  // leaving the headings invisible. Solid chalk text is reliable everywhere.
   document.querySelectorAll('[data-split]').forEach((el) => {
     if (!el.classList.contains('hero__title')) {
-      el.classList.add('t-sheen');
       el.classList.add('t-skew');
     }
   });

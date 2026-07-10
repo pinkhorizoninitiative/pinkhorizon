@@ -19,6 +19,20 @@
   <div class="cursor" aria-hidden="true"></div>
   <div class="cursor-dot" aria-hidden="true"></div>
 
+  <!-- Ambient background field (decorative) -->
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient__grid"></div>
+    <div class="ambient__aurora"></div>
+    <div class="ambient__glow ambient__glow--gold"></div>
+    <div class="ambient__glow ambient__glow--rose"></div>
+    <div class="ambient__ring"></div>
+    <div class="ambient__shape ambient__shape--1"></div>
+    <div class="ambient__shape ambient__shape--2"></div>
+    <div class="ambient__shape ambient__shape--3"></div>
+    <div class="ambient__noise"></div>
+    <div class="lighting" aria-hidden="true"></div>
+  </div>
+
   <!-- NAV -->
   <header class="nav" id="nav">
     <nav class="nav__inner" aria-label="Primary">
@@ -29,7 +43,10 @@
 
       <ul class="nav__links" id="nav-links">
         <li><a href="#about">About</a></li>
+        <li><a href="#mission">Mission</a></li>
         <li><a href="#impact">Focus</a></li>
+        <li><a href="#journey">Volunteer</a></li>
+        <li><a href="#founders">Founders</a></li>
         <li><a href="#events">Events</a></li>
         <li><a href="#join">Join</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -48,7 +65,10 @@
     <nav aria-label="Mobile">
       <ul>
         <li><a href="#about">About</a></li>
+        <li><a href="#mission">Mission</a></li>
         <li><a href="#impact">Focus</a></li>
+        <li><a href="#journey">Volunteer</a></li>
+        <li><a href="#founders">Founders</a></li>
         <li><a href="#events">Events</a></li>
         <li><a href="#join">Join</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -61,20 +81,24 @@
     <!-- HERO -->
     <section class="hero" id="top">
       <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__plane" aria-hidden="true"></div>
       <div class="hero__content">
-        <p class="t-eyebrow hero__eyebrow">Kuala Lumpur · Malaysia · Youth-led</p>
-        <h1 class="t-display hero__title">Youth that moves<br />the <em>horizon</em>.</h1>
-        <p class="t-body hero__sub">
+        <p class="t-eyebrow hero__eyebrow" data-reveal data-reveal-delay="0">Kuala Lumpur · Malaysia · Youth-led</p>
+        <h1 class="t-display hero__title" data-split>
+          Youth that moves<br />the <em>horizon</em>.
+        </h1>
+        <p class="t-body hero__sub" data-reveal data-reveal-delay="4">
           Pink Horizon Initiative creates lasting social change through community
           outreach, education, and youth empowerment, focused on SDG 3 and SDG 4.
           Growth for Youth.
         </p>
-        <div class="hero__actions">
+        <div class="hero__actions" data-reveal data-reveal-delay="5">
           <a class="btn-primary" href="mailto:pinkhorizon.qd@gmail.com?subject=Be%20Part%20of%20Us">Be Part of Us <span aria-hidden="true">→</span></a>
           <a class="btn-ghost" href="#about">Our Story</a>
         </div>
       </div>
-      <p class="t-caption hero__scroll">Scroll to explore</p>
+      <p class="t-caption hero__scroll" data-reveal data-reveal-delay="6">Scroll to explore</p>
+      <div class="hero__progress" aria-hidden="true"><span class="hero__progress-bar" data-hero-progress></span></div>
     </section>
 
     <!-- HORIZON LINE 1 -->
@@ -82,43 +106,80 @@
 
     <!-- ABOUT -->
     <section class="about" id="about">
-      <div class="about__grid reveal">
-        <div class="about__text">
-          <p class="t-eyebrow">Who we are</p>
-          <h2 class="t-heading">A youth-led organisation<br />that refuses small ambitions.</h2>
-          <p class="t-body">
+      <div class="about__grid">
+        <div class="about__text" data-reveal-group>
+          <p class="t-eyebrow" data-reveal>Who we are</p>
+          <h2 class="t-heading" data-reveal data-split>A youth-led organisation<br />that refuses small ambitions.</h2>
+          <p class="t-body" data-reveal>
             We started in Kuala Lumpur with a simple conviction: young Malaysians
             are not waiting to be empowered, they are already doing the work. Pink
             Horizon gathers that energy and points it at problems that matter —
             health access for underserved communities and education that actually
             reaches the people left out.
           </p>
-          <p class="t-body">
+          <p class="t-body" data-reveal>
             We are volunteers, students, organisers, and professionals who believe
             strength looks like showing up. Our name is a statement, not a softness:
             pink as resolve, not as permission.
           </p>
         </div>
-        <div class="about__panel" aria-hidden="true">
+        <div class="about__panel" data-parallax data-parallax-speed="0.14" aria-hidden="true">
           <div class="about__panel-mark"></div>
           <span class="about__panel-label">Est. Kuala Lumpur</span>
+          <div class="about__panel-line"></div>
         </div>
       </div>
     </section>
 
+    <!-- MISSION -->
+    <section class="mission" id="mission">
+      <div class="mission__inner">
+        <div class="mission__heading" data-reveal-group>
+          <p class="t-eyebrow" data-reveal>Our mission</p>
+          <h2 class="t-heading mission__title" data-reveal data-split>Where a generation<br />meets its responsibility.</h2>
+        </div>
+        <div class="mission__body" data-reveal-group>
+          <p class="t-body mission__lead" data-reveal data-scroll-type>
+            Pink Horizon Initiative exists to close the distance between young
+            Malaysians who want to help and the communities that need them. We do not
+            run charity from a distance. We build local capacity, hand the microphone
+            to the people most affected, and measure ourselves by what stays behind
+            after the volunteers go home.
+          </p>
+          <div class="mission__cols">
+            <p class="t-body" data-reveal>
+              Our model is deliberately light on hierarchy and heavy on action. A
+              secondary student, a medical undergraduate, and a working parent can
+              sit at the same table and leave with the same mandate: go do the work,
+              tell us what you learned, bring someone else next time.
+            </p>
+            <p class="t-body" data-reveal>
+              We are accountable to the neighbourhoods we serve, not to a brand. Every
+              programme begins with a listening circle and ends with a report back —
+              because trust is the only infrastructure that survives contact with
+              reality.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HORIZON LINE 2 -->
+    <div class="horizon" aria-hidden="true"><span class="horizon__line" data-horizon></span></div>
+
     <!-- IMPACT -->
     <section class="impact" id="impact">
-      <div class="impact__grid reveal">
-        <aside class="impact__rail">
-          <p class="t-eyebrow impact__rail-label">Our focus areas</p>
+      <div class="impact__grid">
+        <aside class="impact__rail" data-reveal-group>
+          <p class="t-eyebrow impact__rail-label" data-reveal>Our focus areas</p>
           <ol class="impact__index">
-            <li><span class="impact__num">01</span> Good Health</li>
-            <li><span class="impact__num">02</span> Quality Education</li>
+            <li data-reveal><span class="impact__num">01</span> Good Health</li>
+            <li data-reveal><span class="impact__num">02</span> Quality Education</li>
           </ol>
         </aside>
 
-        <div class="impact__content">
-          <article class="focus">
+        <div class="impact__content" data-reveal-group>
+          <article class="focus" data-stagger>
             <h3 class="t-heading focus__title">SDG 3 — Good Health and Well-being</h3>
             <p class="t-body">
               We bring health literacy, screening referrals, and mental-health
@@ -129,7 +190,7 @@
 
           <hr class="rule" />
 
-          <article class="focus">
+          <article class="focus" data-stagger>
             <h3 class="t-heading focus__title">SDG 4 — Quality Education</h3>
             <p class="t-body">
               Free tutoring cohorts, digital-skills workshops, and a mentorship network
@@ -139,19 +200,19 @@
           </article>
 
           <div class="focus__grid">
-            <div class="focus__item">
+            <div class="focus__item" data-stagger>
               <span class="focus__icon" aria-hidden="true"></span>
               <p class="t-caption">Community outreach on the ground</p>
             </div>
-            <div class="focus__item">
+            <div class="focus__item" data-stagger>
               <span class="focus__icon" aria-hidden="true"></span>
               <p class="t-caption">Youth-led facilitation</p>
             </div>
-            <div class="focus__item">
+            <div class="focus__item" data-stagger>
               <span class="focus__icon" aria-hidden="true"></span>
               <p class="t-caption">Mentorship that lasts</p>
             </div>
-            <div class="focus__item">
+            <div class="focus__item" data-stagger>
               <span class="focus__icon" aria-hidden="true"></span>
               <p class="t-caption">Open educational resources</p>
             </div>
@@ -160,33 +221,217 @@
       </div>
     </section>
 
-    <!-- HORIZON LINE 2 -->
-    <div class="horizon" aria-hidden="true"><span class="horizon__line" data-horizon></span></div>
+    <!-- HYBRID HORIZONTAL SCROLL STORYTELLING -->
+    <section class="story" id="story" aria-label="How our work travels">
+      <div class="story__pin">
+        <div class="story__track" data-horizontal>
+          <article class="story__panel story__panel--intro" data-parallax data-parallax-speed="0.1">
+            <p class="t-eyebrow">The journey of a programme</p>
+            <h2 class="t-display story__head">From a<br />listening<br />circle<br />to a<br /><em>movement</em>.</h2>
+            <p class="t-caption story__hint">Scroll — the story moves sideways</p>
+          </article>
+
+          <article class="story__panel" data-stagger>
+            <span class="story__step">Step 01</span>
+            <h3 class="t-heading story__title">We listen first.</h3>
+            <p class="t-body">
+              Before a single event is planned, our facilitators sit with residents,
+              teachers, and clinic staff. The problems are named by the people living
+              them — not by a strategy deck in another city.
+            </p>
+          </article>
+
+          <article class="story__panel" data-stagger>
+            <span class="story__step">Step 02</span>
+            <h3 class="t-heading story__title">Young people lead it.</h3>
+            <p class="t-body">
+              University students and recent graduates run the sessions. The result is a
+              room where nobody is talked down to, and where the people helping look
+              like the people being helped.
+            </p>
+          </article>
+
+          <article class="story__panel" data-stagger>
+            <span class="story__step">Step 03</span>
+            <h3 class="t-heading story__title">We build capacity.</h3>
+            <p class="t-body">
+              Each cohort trains the next. A health drive in Sentul becomes a playbook a
+              school in Shah Alam can run three months later without us in the room.
+            </p>
+          </article>
+
+          <article class="story__panel story__panel--end" data-stagger>
+            <span class="story__step">Step 04</span>
+            <h3 class="t-heading story__title">It outlives us.</h3>
+            <p class="t-body">
+              Real change is what remains when the volunteers leave. A parent who can
+              navigate a referral, a student who can tutor the one behind them — that is
+              the horizon, moved.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- METRICS / COUNTERS -->
+    <section class="metrics" id="metrics">
+      <div class="metrics__inner">
+        <p class="t-eyebrow metrics__label" data-reveal>What we have built together</p>
+        <div class="metrics__grid">
+          <div class="metric" data-reveal data-stagger>
+            <span class="metric__value" data-count="48" data-suffix="">0</span>
+            <p class="t-caption metric__caption">Community programmes delivered since 2021</p>
+          </div>
+          <div class="metric" data-reveal data-stagger>
+            <span class="metric__value" data-count="1200" data-suffix="+">0</span>
+            <p class="t-caption metric__caption">Young Malaysians volunteered their time</p>
+          </div>
+          <div class="metric" data-reveal data-stagger>
+            <span class="metric__value" data-count="37" data-suffix="">0</span>
+            <p class="t-caption metric__caption">Neighbourhoods reached across the Klang Valley</p>
+          </div>
+          <div class="metric" data-reveal data-stagger>
+            <span class="metric__value" data-count="92" data-suffix="%">0</span>
+            <p class="t-caption metric__caption">Of participants return for a second cohort</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SDG DEEP DIVE -->
+    <section class="sdg" id="sdg">
+      <div class="sdg__inner">
+        <div class="sdg__head" data-reveal-group>
+          <p class="t-eyebrow" data-reveal>Anchored to the Global Goals</p>
+          <h2 class="t-heading" data-reveal data-split>Two goals.<br />One horizon.</h2>
+        </div>
+        <div class="sdg__grid">
+          <article class="sdg__card" data-stagger>
+            <span class="sdg__num">03</span>
+            <h3 class="t-heading sdg__title">Good Health and Well-being</h3>
+            <p class="t-body">
+              We meet communities where health systems thin out. Our circles normalise
+              conversations about mental health, connect residents to screening and
+              referrals, and train peer facilitators who stay long after a visit ends.
+            </p>
+            <ul class="sdg__list">
+              <li data-reveal>Monthly mental-health listening circles</li>
+              <li data-reveal>Health-literacy workshops in Bahasa and English</li>
+              <li data-reveal>Referral pathways to local clinics</li>
+            </ul>
+          </article>
+          <article class="sdg__card" data-stagger>
+            <span class="sdg__num">04</span>
+            <h3 class="t-heading sdg__title">Quality Education</h3>
+            <p class="t-body">
+              Education is the door we hold open. Free tutoring cohorts, digital-skills
+              labs, and a mentorship network turn a one-time lesson into a relationship
+              that carries a student further than a single exam.
+            </p>
+            <ul class="sdg__list">
+              <li data-reveal>Quarterly tutoring cohorts</li>
+              <li data-reveal>Digital-skills and coding workshops</li>
+              <li data-reveal>Mentorship from working young Malaysians</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- VOLUNTEER JOURNEY -->
+    <section class="journey" id="journey">
+      <div class="journey__inner">
+        <div class="journey__head" data-reveal-group>
+          <p class="t-eyebrow" data-reveal>Your volunteer journey</p>
+          <h2 class="t-heading" data-reveal data-split>Show up.<br />Stay a while.</h2>
+        </div>
+        <ol class="journey__steps">
+          <li class="journey__step" data-stagger>
+            <span class="journey__index">01</span>
+            <div class="journey__detail">
+              <h3 class="t-heading journey__title">Reach out</h3>
+              <p class="t-body">Write to us or meet us at an open house. No CV, no audition — only a willingness to show up.</p>
+            </div>
+          </li>
+          <li class="journey__step" data-stagger>
+            <span class="journey__index">02</span>
+            <div class="journey__detail">
+              <h3 class="t-heading journey__title">Get trained</h3>
+              <p class="t-body">Our facilitator training prepares you to lead a circle or a cohort with confidence and care.</p>
+            </div>
+          </li>
+          <li class="journey__step" data-stagger>
+            <span class="journey__index">03</span>
+            <div class="journey__detail">
+              <h3 class="t-heading journey__title">Run a programme</h3>
+              <p class="t-body">Lead a health drive, tutor a cohort, or mentor a student. You are never the only one in the room.</p>
+            </div>
+          </li>
+          <li class="journey__step" data-stagger>
+            <span class="journey__index">04</span>
+            <div class="journey__detail">
+              <h3 class="t-heading journey__title">Bring the next one</h3>
+              <p class="t-body">The journey ends where it began — by inviting someone else to start theirs.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- FOUNDERS -->
+    <section class="founders" id="founders">
+      <div class="founders__inner">
+        <div class="founders__head" data-reveal-group>
+          <p class="t-eyebrow" data-reveal>Our founders</p>
+          <h2 class="t-heading" data-reveal data-split>Two voices that<br />refused to wait.</h2>
+        </div>
+        <div class="founders__grid">
+          <article class="founder" data-stagger>
+            <div class="founder__mark" aria-hidden="true">QH</div>
+            <h3 class="t-heading founder__name">Qisthi Hadina</h3>
+            <ul class="founder__creds">
+              <li>Best Delegate, Asia World Model United Nations 2022</li>
+              <li>TeenEagle Medalists &amp; Global Qualifier</li>
+            </ul>
+            <a class="founder__email" href="mailto:qisthihadina@gmail.com">qisthihadina@gmail.com</a>
+          </article>
+          <article class="founder" data-stagger>
+            <div class="founder__mark" aria-hidden="true">ES</div>
+            <h3 class="t-heading founder__name">El Delara Safeerah</h3>
+            <ul class="founder__creds">
+              <li>World Scholars Cup Medalists &amp; Global Qualifier</li>
+              <li>Malaysian International Public School Debating Championship participant</li>
+            </ul>
+            <a class="founder__email" href="mailto:delara.sukor@gmail.com">delara.sukor@gmail.com</a>
+          </article>
+        </div>
+      </div>
+    </section>
 
     <!-- EVENTS -->
     <section class="events" id="events">
-      <div class="events__head reveal">
-        <p class="t-eyebrow">What's next</p>
-        <h2 class="t-heading">Gatherings, drives, and<br />open calls.</h2>
+      <div class="events__head" data-reveal-group>
+        <p class="t-eyebrow" data-reveal>What's next</p>
+        <h2 class="t-heading" data-reveal data-split>Gatherings, drives,<br />and open calls.</h2>
       </div>
 
-      <div class="events__scroller" tabindex="0" aria-label="Upcoming events, scroll horizontally">
-        <article class="event">
+      <div class="events__scroller" tabindex="0" aria-label="Upcoming events, scroll horizontally" data-reveal>
+        <article class="event" data-stagger>
           <p class="event__date">14 March 2024</p>
           <h3 class="event__title">Community Health Drive</h3>
           <p class="t-body event__copy">A morning of free health checks and referrals at a community hall in Sentul.</p>
         </article>
-        <article class="event">
+        <article class="event" data-stagger>
           <p class="event__date">02 April 2024</p>
           <h3 class="event__title">Tutoring Cohort Kickoff</h3>
           <p class="t-body event__copy">Our quarterly education programme opens for new student and mentor sign-ups.</p>
         </article>
-        <article class="event">
+        <article class="event" data-stagger>
           <p class="event__date">18 May 2024</p>
           <h3 class="event__title">Youth Facilitator Training</h3>
           <p class="t-body event__copy">A hands-on session for volunteers leading health and education circles.</p>
         </article>
-        <article class="event">
+        <article class="event" data-stagger>
           <p class="event__date">09 June 2024</p>
           <h3 class="event__title">Open House &amp; Listening Circle</h3>
           <p class="t-body event__copy">Come hear what communities are asking for, and where we go next.</p>
@@ -196,9 +441,10 @@
 
     <!-- JOIN US -->
     <section class="join" id="join">
-      <div class="join__inner reveal">
-        <h2 class="t-display join__title">Help us move<br />what's next.</h2>
-        <a class="btn-primary" href="mailto:pinkhorizon.qd@gmail.com?subject=Be%20Part%20of%20Us">Be Part of Us <span aria-hidden="true">→</span></a>
+      <div class="join__inner" data-reveal-group>
+        <h2 class="t-display join__title" data-reveal data-split>Help us move<br />what's next.</h2>
+        <p class="t-body join__sub" data-reveal>Pink is not softness here. It is a decision to be seen, to stay, and to build.</p>
+        <a class="btn-primary" data-reveal href="mailto:pinkhorizon.qd@gmail.com?subject=Be%20Part%20of%20Us">Be Part of Us <span aria-hidden="true">→</span></a>
       </div>
     </section>
 
@@ -207,18 +453,18 @@
 
     <!-- CONTACT -->
     <section class="contact" id="contact">
-      <div class="contact__grid reveal">
-        <div class="contact__left">
-          <p class="t-eyebrow">Reach us</p>
-          <a class="contact__email" href="mailto:pinkhorizon.qd@gmail.com">pinkhorizon.qd@gmail.com</a>
+      <div class="contact__grid">
+        <div class="contact__left" data-reveal-group>
+          <p class="t-eyebrow" data-reveal>Reach us</p>
+          <a class="contact__email" data-reveal href="mailto:pinkhorizon.qd@gmail.com">pinkhorizon.qd@gmail.com</a>
           <ul class="contact__social">
-            <li><a href="#" aria-label="Pink Horizon on Instagram">Instagram</a></li>
-            <li><a href="#" aria-label="Pink Horizon on LinkedIn">LinkedIn</a></li>
-            <li><a href="#" aria-label="Pink Horizon on X">X / Twitter</a></li>
+            <li data-reveal><a href="#" aria-label="Pink Horizon on Instagram">Instagram</a></li>
+            <li data-reveal><a href="#" aria-label="Pink Horizon on LinkedIn">LinkedIn</a></li>
+            <li data-reveal><a href="#" aria-label="Pink Horizon on X">X / Twitter</a></li>
           </ul>
         </div>
-        <div class="contact__right">
-          <p class="t-heading contact__tagline">Strength, possibility,<br />and an expanding horizon.</p>
+        <div class="contact__right" data-reveal-group>
+          <p class="t-heading contact__tagline" data-reveal>Strength, possibility,<br />and an expanding horizon.</p>
         </div>
       </div>
     </section>
@@ -233,7 +479,10 @@
       </a>
       <nav class="footer__nav" aria-label="Footer">
         <a href="#about">About</a>
+        <a href="#mission">Mission</a>
         <a href="#impact">Focus</a>
+        <a href="#journey">Volunteer</a>
+        <a href="#founders">Founders</a>
         <a href="#events">Events</a>
         <a href="#join">Join</a>
         <a href="#contact">Contact</a>

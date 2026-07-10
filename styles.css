@@ -370,8 +370,15 @@ main,
   100% { border-radius: 45% 55% 50% 50%; }
 }
 
-html, body { cursor: none; }
-a, button, input, textarea, select { cursor: none; }
+/* Hide the native pointer ONLY where the custom cursor blob is actually
+   drawn — i.e. devices with a precise, hovering pointer. This matches the
+   `finePointer` gate in main.js. Without this guard, iPads / touch devices
+   (where the blob is disabled) would have their system pointer hidden too,
+   leaving no visible cursor at all. */
+@media (hover: hover) and (pointer: fine) {
+  html, body { cursor: none; }
+  a, button, input, textarea, select { cursor: none; }
+}
 
 /* ============================================================
    NAV

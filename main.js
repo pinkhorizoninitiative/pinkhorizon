@@ -9,6 +9,14 @@
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+  // Whether the device has a precise, hovering pointer (mouse / trackpad /
+  // stylus-with-hover). This is the correct gate for the custom cursor and
+  // mouse-follow effects — unlike `isTouch`, it stays TRUE on an iPad or a
+  // hybrid laptop that has a trackpad attached, so those devices still get
+  // the cursor. It is FALSE on a finger-only phone, where a custom cursor
+  // makes no sense (there is nothing for it to follow).
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
   /* ----------------------------------------------------------
      SPLIT TEXT — wrap each line in a mask span for reveal
      ---------------------------------------------------------- */
@@ -323,7 +331,7 @@
     smoothKick();
   }
 
-  if (!isTouch && !prefersReduced) {
+  if (finePointer && !prefersReduced) {
     smooth.enabled = true;
     smooth.target = smooth.current = window.scrollY || window.pageYOffset;
     document.documentElement.style.scrollBehavior = 'auto';
@@ -388,7 +396,7 @@
      their own float animations (parent + child transforms compose).
      ---------------------------------------------------------- */
   const ambient = document.querySelector('.ambient');
-  if (ambient && !isTouch && !prefersReduced) {
+  if (ambient && finePointer && !prefersReduced) {
     let targetX = 0, targetY = 0, curX = 0, curY = 0;
     const MAX = 60; // px of drift at screen edge (stronger)
 
@@ -412,13 +420,18 @@
   /* ----------------------------------------------------------
      3D INTERACTIVE TILT — cards lean toward the cursor in depth
      ---------------------------------------------------------- */
-  if (!isTouch && !prefersReduced) {
+  // Uses Pointer Events (not mouse events) so the tilt works with a mouse,
+  // a trackpad, a finger, OR an Apple Pencil. On touch devices the card
+  // leans toward the finger as it drags across — that is why the 3D effect
+  // now shows on iPad and phones, where the old mouse-only version did not.
+  // Listeners are passive: they never call preventDefault, so page and
+  // horizontal scrolling stay completely unaffected.
+  if (!prefersReduced) {
     const tiltCards = document.querySelectorAll('.founder, .event, .sdg__card');
     const MAX_TILT = 6; // degrees
     tiltCards.forEach((card) => {
       card.classList.add('tilt');
-      card.addEventListener('mouseenter', () => card.classList.add('is-tilting'));
-      card.addEventListener('mousemove', (e) => {
+      const applyTilt = (e) => {
         const r = card.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width - 0.5;
         const py = (e.clientY - r.top) / r.height - 0.5;
@@ -426,11 +439,17 @@
         const rotX = -py * MAX_TILT * 2;
         card.style.transform =
           `rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateZ(40px)`;
-      });
-      card.addEventListener('mouseleave', () => {
+      };
+      const resetTilt = () => {
         card.classList.remove('is-tilting');
         card.style.transform = '';
-      });
+      };
+      card.addEventListener('pointerenter', () => card.classList.add('is-tilting'), { passive: true });
+      card.addEventListener('pointerdown', () => card.classList.add('is-tilting'), { passive: true });
+      card.addEventListener('pointermove', applyTilt, { passive: true });
+      card.addEventListener('pointerleave', resetTilt, { passive: true });
+      card.addEventListener('pointerup', resetTilt, { passive: true });
+      card.addEventListener('pointercancel', resetTilt, { passive: true });
     });
   }
 
@@ -440,7 +459,7 @@
   const cursorBlob = document.querySelector('.cursor');
   const cursorDot = document.querySelector('.cursor-dot');
 
-  if (cursorBlob && cursorDot && !isTouch && !prefersReduced) {
+  if (cursorBlob && cursorDot && finePointer && !prefersReduced) {
     let mouseX = 0, mouseY = 0, blobX = 0, blobY = 0, dotX = 0, dotY = 0;
 
     window.addEventListener('mousemove', (e) => {

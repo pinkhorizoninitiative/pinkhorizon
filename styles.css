@@ -1881,6 +1881,28 @@ main,
   .story__panel { width: 84vw; height: 64vh; padding: 32px; }
   .story__panel--intro { width: 86vw; }
 
+  /* Phone: native horizontal finger-swipe instead of the pinned
+     vertical-scroll-driven translate (see main.js `useNativeStory`).
+     The section height is reset by JS; these rules make the strip a real
+     scroll container the user drags left/right, with snap points. */
+  .story { height: auto !important; }
+  .story__pin {
+    position: static;
+    height: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;               /* Firefox */
+  }
+  .story__pin::-webkit-scrollbar { display: none; } /* WebKit */
+  .story__track {
+    transform: none !important;
+    flex-wrap: nowrap;
+  }
+  .story__panel { scroll-snap-align: center; }
+  .story__panel--intro { scroll-snap-align: start; }
+
   .footer__inner { flex-direction: column; text-align: center; justify-content: center; }
 }
 

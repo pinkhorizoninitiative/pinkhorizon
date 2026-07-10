@@ -169,13 +169,24 @@
   const storyTrack = document.querySelector('[data-horizontal]');
   let storyScrollDistance = 0;
 
+  // On phones the pinned "vertical-scroll drives horizontal-translate" trick
+  // is unreliable (iOS dynamic viewport keeps re-measuring 100vh, and sticky
+  // pinning is fragile) AND unnatural — the expected gesture on a horizontal
+  // strip is a finger swipe. So on narrow/coarse-pointer screens we hand the
+  // strip back to the browser as a native horizontal scroller (see the
+  // matching CSS in the max-width:768px block) and skip the JS translate.
+  const nativeStoryQuery = window.matchMedia('(max-width: 768px)');
+  const useNativeStory = () => nativeStoryQuery.matches;
+
   function measureStory() {
     if (!storySection || !storyTrack) return;
 
-    // Reduced motion: fall back to a normal horizontal-scroll row (no pinning)
-    if (prefersReduced) {
+    // Reduced motion OR phone: fall back to a native horizontal-scroll row
+    // (no pinning, no JS-driven transform — the user swipes it directly).
+    if (prefersReduced || useNativeStory()) {
       storySection.style.height = 'auto';
       storyTrack.style.transform = 'none';
+      storyScrollDistance = 0;
       return;
     }
 
